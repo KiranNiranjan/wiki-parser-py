@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup, NavigableString, Tag
 import requests
+import unicodedata
 
 
 class GetData:
@@ -35,59 +36,63 @@ class Converter:
         trs = self._data.find_all('tr')
         table_data = {}
         for tr in trs:
-            if tr.td:
-                key = self.process_td_key(tr.td)
-                for i, td_siblings in enumerate(tr):
-                    if isinstance(td_siblings, NavigableString):
-                        continue
-                    if isinstance(td_siblings, Tag):
-                        value = self.process_td_value(td_siblings)
-                        if key and value: table_data[key] = value
-        print(table_data)
+            key = None
+            value = None
+            data = self.data_to_array(tr)
+
+            for i, item in enumerate(data):
+
+                if i == 0:
+                    if hasattr(item, 'string'):
+                        key = self.process_td_key(item)
+                        key = self.string_normalize(key)
+                else:
+                    value = self.process_td_value(item)
+                    value = self.string_normalize(value)
+
+            if key and value is not None: table_data[key] = value
+
+        return table_data
 
     @staticmethod
-    def process_td_key(td):
-
-        if td.a:
-            if hasattr(td.a, 'string'):
-                return td.a.string
-            elif td.a.span:
-                if hasattr(td.a.span, 'string'):
-                    return td.a.span.string
-
-        if td.span:
-            if hasattr(td.span, 'string'):
-                return td.span.string
-
-        if hasattr(td, 'string'):
-            return td.string
+    def process_td_key(item):
+        for string in item.find_all(string=True):
+            return string
 
     @staticmethod
-    def process_td_value(td):
+    def process_td_value(items):
+        strings = ''
+        for string in items.find_all(string=True):
+            if string != '\n': strings += string
+        return strings
 
-        if td.a:
-            if hasattr(td.a, 'string'):
-                return td.a.string
+    @staticmethod
+    def data_to_array(data):
+        try:
+            while '\n' in data.contents: data.contents.remove('\n')
+        except:
+            pass
+        return data
 
-        if td.span:
-            if hasattr(td.span, 'string'):
-                return td.span.string
-
-        if hasattr(td, 'string'):
-            return td.string
+    @staticmethod
+    def string_normalize(string):
+        if string is not None:
+            string = unicodedata.normalize("NFKD", string)
+            string = string.replace('\n', ' ')
+            string = string.replace('[1]', ' ')
+            string = string.replace('[2]', ' ')
+        return string
 
 
 # Method to get info box from wikipedia
 def infoBox(url):
     features = GetFeatures(url)
-    print(features.get_info_box())
+    return features.get_info_box()
 
 
 # Main functions
 def wiki_parser(url):
     soup = GetData(url)
-
-    return infoBox(url)
 
 
 if __name__ == "__main__": wiki_parser("https://en.wikipedia.org/wiki/Methane")
