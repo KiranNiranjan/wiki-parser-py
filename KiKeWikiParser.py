@@ -26,6 +26,10 @@ class GetFeatures(GetData):
         t_to_json = Converter(self.html_content.find_all('table', class_='infobox')[0])
         return t_to_json.table_to_json()
 
+    def get_paragraph(self, num):
+        p_to_json = Converter(self.html_content.find_all('div', class_='mw-content-ltr')[0])
+        return p_to_json.paragraph_to_json(num)
+
 
 class Converter:
     def __init__(self, data):
@@ -53,6 +57,21 @@ class Converter:
             if key and value is not None: table_data[key] = value
 
         return table_data
+
+    def paragraph_to_json(self, num):
+        paras = self._data.find_all('p')
+        paragraph_data = {}
+        strings = ''
+        for i, para in enumerate(paras):
+            data = self.data_to_array(para)
+
+            if i > num:
+                break
+            for string in data.find_all(string=True):
+                string = self.string_normalize(string)
+                if string is not None and string != '\n': strings += string
+        paragraph_data['data'] = strings
+        return paragraph_data
 
     @staticmethod
     def process_td_key(item):
@@ -88,6 +107,12 @@ class Converter:
 def infoBox(url):
     features = GetFeatures(url)
     return features.get_info_box()
+
+
+# Method to get info box from wikipedia
+def getParagraph(url, num=2):
+    features = GetFeatures(url)
+    return features.get_paragraph(num)
 
 
 # Main functions
