@@ -31,6 +31,10 @@ class GetFeatures(GetData):
         p_to_json = Converter(self.html_content.find_all('div', class_='mw-content-ltr')[0])
         return p_to_json.paragraph_to_json(num)
 
+    def get_main_image(self):
+        img_to_json = Converter(self.html_content.find_all('div', class_='mw-content-ltr')[0])
+        return img_to_json.img_to_json()
+
 
 class Converter:
     def __init__(self, data):
@@ -59,6 +63,8 @@ class Converter:
 
         return table_data
 
+    """ Method To get Paragraph """
+
     def paragraph_to_json(self, num):
         paras = self._data.find_all('p')
         paragraph_data = {}
@@ -74,17 +80,26 @@ class Converter:
         paragraph_data['data'] = strings
         return paragraph_data
 
+    """ Method To get Main Image """
+
+    def img_to_json(self):
+        images = self._data.find_all('img')
+        img_string = images[0]['src']
+        index = img_string.rfind('/') + 1
+        img_object = {'fileName': img_string[index:], 'link': 'https:' + img_string}
+        return img_object
+
     @staticmethod
     def process_td_key(item):
         for string in item.find_all(string=True):
-            return string
+            if string is not None and string != '\n': return string
 
     @staticmethod
     def process_td_value(items):
         strings = ''
         for string in items.find_all(string=True):
-            if string != '\n': strings += string
-        return strings
+            if string != '\n': strings += ' ' + string
+        return strings.strip()
 
     @staticmethod
     def data_to_array(data):
@@ -119,6 +134,12 @@ def allTables(url):
 def getParagraph(url, num=2):
     features = GetFeatures(url)
     return features.get_paragraph(num)
+
+
+# Method to get Main image from wikipedia
+def getMainImage(url):
+    features = GetFeatures(url)
+    return features.get_main_image()
 
 
 # Main functions
