@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup, NavigableString, Tag
 import requests
 import unicodedata
+import re
 
 
 class GetData:
@@ -98,8 +99,7 @@ class Converter:
         if string is not None:
             string = unicodedata.normalize("NFKD", string)
             string = string.replace('\n', ' ')
-            string = string.replace('[1]', ' ')
-            string = string.replace('[2]', ' ')
+            string = re.sub('\\[.*?\\]', '', string)
         return string
 
 
@@ -109,7 +109,13 @@ def infoBox(url):
     return features.get_info_box()
 
 
-# Method to get info box from wikipedia
+# Method to get all table from wikipedia
+def allTables(url):
+    features = GetFeatures(url)
+    return features.get_info_box()
+
+
+# Method to get paragraph from wikipedia
 def getParagraph(url, num=2):
     features = GetFeatures(url)
     return features.get_paragraph(num)
