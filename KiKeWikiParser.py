@@ -124,12 +124,6 @@ def infoBox(url):
     return features.get_info_box()
 
 
-# Method to get all table from wikipedia
-def allTables(url):
-    features = GetFeatures(url)
-    return features.get_info_box()
-
-
 # Method to get paragraph from wikipedia
 def getParagraph(url, num=2):
     features = GetFeatures(url)
