@@ -141,4 +141,4 @@ def wiki_parser(url):
     soup = GetData(url)
 
 
-if __name__ == "__main__": wiki_parser("https://en.wikipedia.org/wiki/Methane")
+if __name__ == "__main__": wiki_parser()
