@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='wiki-parser',
-    version='1.0.0',
+    name='wikiparser',
+    version='1.0.1',
     description='Wikipedia parser',
     long_description='Simple and best tool to parse wikipedia',
     url='https://github.com/KiranNiranjan/wiki-parser-py',
@@ -17,14 +17,14 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
-        'License :: MIT License',
+        'License :: OSI Approved :: MIT License',
 
         'Programming Language :: Python :: 3.6',
     ],
 
     keywords='wiki parser html to json wikipedia',
 
-    packages=['wiki_parser'],
+    packages=['wikiparser'],
 
     install_requires=['bs4', 'requests'],
 
@@ -35,7 +35,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'wiki-parser-kike=wiki_parser.main:wiki_parser',
+            'wikiparser = wikiparser.wikiparser:wiki_parser',
         ],
     },
 )
