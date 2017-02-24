@@ -1,7 +1,11 @@
-Wikipedia Parser                                          |wikiparser logo|
+Wikipedia Parser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|wikiparser logo|
 ===========================================================================
 
 Simple and best tool to parse wikipedia
+
+.. image:: https://travis-ci.org/KiranNiranjan/wiki-parser-py.svg?branch=master
+    :target: https://travis-ci.org/KiranNiranjan/wiki-parser-py
+
 
 Installing
 ----------
@@ -44,7 +48,7 @@ Methods
 
    .. code:: python
 
-       // To get info_box table from wikipedia as json
+       ''' To get info_box table from wikipedia as json '''
        infoBox = infoBox("https://en.wikipedia.org/wiki/Methane")
 
 Running the tests
@@ -64,7 +68,7 @@ Authors
 Javasctipt (npm)
 ----------------
 
-`wikiparser`_
+`wikiparser`_ `KiKe`_
 
 License
 -------
@@ -74,6 +78,6 @@ file for details
 
 .. _KiKe: http://kike.co.in
 .. _wikiparser: https://www.npmjs.com/package/wikiparser
-.. _LICENSE.md: ./LICENSE
+.. _LICENSE.md: ./LICENSE.md
 
 .. |wikiparser logo| image:: https://raw.githubusercontent.com/KiranNiranjan/wiki-parser-js/master/images/wiki_parser_logo.png
