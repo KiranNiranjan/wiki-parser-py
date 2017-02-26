@@ -15,21 +15,8 @@
 # limitations under the License.
 
 import unittest
-from wikiparser import *
+from tests.test import TestWikiParser
 
-
-class TestWikiParser(unittest.TestCase):
-
-    def __init__(self, testname, url="https://en.wikipedia.org/wiki/Methane"):
-        super().__init__(testname)
-        self._url = url
-
-    def testGetInfoBox(self):
-        info = infoBox(self._url)
-        self.assertIsNotNone(info)
-        self.failIf(info is None)
-
-    def testGetMainImage(self):
-        image = getMainImage(self._url)
-        self.assertIsNotNone(image)
-        self.assertIsNotNone(image['link'])
+testSuite = unittest.TestSuite()
+testSuite.addTest(TestWikiParser("testGetInfoBox", "https://en.wikipedia.org/wiki/Methane"))
+unittest.TextTestRunner(verbosity=2).run(testSuite)

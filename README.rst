@@ -1,4 +1,4 @@
-Wikipedia Parser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|wikiparser logo|
+Wikipedia Parser                                          |wikiparser logo|
 ===========================================================================
 
 Simple and best tool to parse wikipedia
