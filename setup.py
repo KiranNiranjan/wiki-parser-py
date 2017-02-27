@@ -46,7 +46,7 @@ setup(
 
     extras_require={
         'dev': ['check-manifest'],
-        'test': ['coverage'],
+        'test': ['pytest'],
     },
 
     entry_points={
