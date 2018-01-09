@@ -58,7 +58,7 @@ Explain how to run the automated tests for this system
 
 .. code:: bash
 
-    tox
+    python tests/test.py
 
 Authors
 -------

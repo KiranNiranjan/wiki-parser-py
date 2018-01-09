@@ -129,10 +129,25 @@ class Converter:
     @staticmethod
     def string_normalize(string):
         if string is not None:
-            string = unicodedata.normalize("NFKD", string)
+            # Removes non ascii characters form the string
+            string = removeNonAscii(string)
             string = string.replace('\n', ' ')
             string = re.sub('\\[.*?\\]', '', string)
         return string
+
+
+# Removes non ascii characters form the string
+def removeNonAscii(string):
+    if len(string) <= 0:
+        return ''
+
+    ascii_string = ''
+    for i in string:
+        if ord(i) < 128:
+            ascii_string += i
+        if ord(i) == 8722:
+            ascii_string += '-'
+    return ascii_string
 
 
 # Method to get info box from wikipedia
