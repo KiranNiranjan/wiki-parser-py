@@ -71,6 +71,7 @@ class Converter:
                     if hasattr(item, 'string'):
                         key = self.process_td_key(item)
                         key = self.string_normalize(key)
+                        key = self.string_replace_space(key)
                 else:
                     value = self.process_td_value(item)
                     value = self.string_normalize(value)
@@ -133,6 +134,12 @@ class Converter:
             string = removeNonAscii(string)
             string = string.replace('\n', ' ')
             string = re.sub('\\[.*?\\]', '', string)
+        return string
+
+    @staticmethod
+    def string_replace_space(string):
+        if string is not None:
+            string = string.replace(' ', '')
         return string
 
 

@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='wikiparser',
-    version='1.0.1',
+    version='1.0.2',
     description='Wikipedia parser',
     long_description='Simple and best tool to parse wikipedia',
     url='https://github.com/KiranNiranjan/wiki-parser-py',
